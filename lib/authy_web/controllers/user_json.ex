@@ -1,17 +1,11 @@
 defmodule AuthyWeb.UserJSON do
   alias Authy.Accounts.User
 
-  @doc """
-  Renders a list of users.
-  """
-  def index(%{users: users}) do
-    %{data: for(user <- users, do: data(user))}
+  def login(%{token: token}) do
+    %{data: %{token: token}}
   end
 
-  @doc """
-  Renders a single user.
-  """
-  def show(%{user: user}) do
+  def register(%{user: user}) do
     %{data: data(user)}
   end
 

@@ -43,6 +43,7 @@ defmodule Authy.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:argon2_elixir, "~> 2.0"},
+      {:joken, "~> 2.6"}
     ]
   end
 

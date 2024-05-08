@@ -8,7 +8,8 @@ defmodule AuthyWeb.Router do
   scope "/api", AuthyWeb do
     pipe_through :api
 
-    post "/auth/login", AuthController, :login  
-    post "/auth/register", AuthController, :register
+    post "/auth/login", UserController, :login  
+    post "/auth/register", UserController, :register
+    post "/auth/validate", UserController, :validate
   end
 end

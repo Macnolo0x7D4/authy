@@ -2,42 +2,47 @@ defmodule AuthyWeb.UserController do
   use AuthyWeb, :controller
 
   alias Authy.Accounts
-  alias Authy.Accounts.User
 
   action_fallback AuthyWeb.FallbackController
 
-  def index(conn, _params) do
-    users = Accounts.list_users()
-    render(conn, :index, users: users)
-  end
+  def login(conn, %{"email" => email, "password" => password}) do
+    case Accounts.get_user_by_email_and_password(email, password) do
+      nil ->
+        conn
+        |> put_status(:unauthorized)
+        |> json(%{error: "invalid email or password"})
 
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/users/#{user}")
-      |> render(:show, user: user)
+      user ->
+
+        {:ok, token, _claims} = Authy.Auth.encode_and_sign(%{sub: user.id})
+
+        conn
+        |> put_status(:ok)
+        |> render(:login, token: token)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, :show, user: user)
-  end
+  def register(conn, %{"email" => email, "password" => password}) do
+    case Accounts.register_user(%{email: email, password: password}) do
+      {:ok, user} ->
+        conn
+        |> put_status(:created)
+        |> render(:register, user: user)
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
-
-    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-      render(conn, :show, user: user)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> json(%{error: "invalid attributes", details: changeset.errors})
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def validate(conn, %{"token" => token}) do
+    case Authy.Auth.verify_and_validate(token) do
+      {:ok, claims} ->
+        conn |> put_status(:ok) |> json(%{data: %{user_id: claims["sub"]}})
 
-    with {:ok, %User{}} <- Accounts.delete_user(user) do
-      send_resp(conn, :no_content, "")
+      {:error, _reason} ->
+        conn |> put_status(:unauthorized) |> json(%{error: "invalid token"})
     end
   end
 end
