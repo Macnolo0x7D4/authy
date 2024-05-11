@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authy-ingress
+  namespace: authy
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+    - host: authy.!DNS!
+      http:
+        paths:
+          - backend:
+              service:
+                name: authy-service
+                port:
+                  name: http
+            path: /
+            pathType: Prefix

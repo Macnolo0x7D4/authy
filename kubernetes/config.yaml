@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authy-config
+  namespace: authy
+  labels:
+    app: authy
+data:
+  DATABASE_HOST: "postgres.default"
+  DATABASE_NAME: "authy"
+  SECRET_KEY_BASE: "awkeA2cJ8NfwJgk3T3Nenc25UzNMWb5BRzsAUZ9GFd2V6vcrT35MEVSwepDBiCIk"
+  PHX_HOST: "example.com"
