@@ -6,7 +6,5 @@ metadata:
   labels:
     app: authy
 data:
-  DATABASE_HOST: {{ .Values.authy.postgres.host }}
-  DATABASE_NAME: {{ .Values.authy.postgres.name }}
   SECRET_KEY_BASE: "awkeA2cJ8NfwJgk3T3Nenc25UzNMWb5BRzsAUZ9GFd2V6vcrT35MEVSwepDBiCIk"
   PHX_HOST: {{ default "authy" .Release.Namespace }}.!DNS!

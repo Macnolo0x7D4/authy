@@ -19,26 +19,11 @@ spec:
         ports:
         - containerPort: 4000
         env:
-        - name: DATABASE_USER
+        - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               name: authy-postgres-secret
-              key: DATABASE_USER
-        - name: DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: authy-postgres-secret
-              key: DATABASE_PASSWORD
-        - name: DATABASE_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: authy-config
-              key: DATABASE_HOST
-        - name: DATABASE_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: authy-config
-              key: DATABASE_NAME
+              key: DATABASE_URL
         - name: SECRET_KEY_BASE
           valueFrom:
             configMapKeyRef:
@@ -49,5 +34,3 @@ spec:
             configMapKeyRef:
               name: authy-config
               key: PHX_HOST
-        - name: DATABASE_URL
-          value: "postgresql://$(DATABASE_USER):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)"
