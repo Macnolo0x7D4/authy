@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: authy
-  namespace: authy
+  namespace: {{ default "authy" .Release.Namespace }}
 spec:
   selector:
     matchLabels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: authy
-        image: !IMAGE!
+        image: {{ .Values.image.registry }}.azurecr.io/{{ .Values.image.name }}:{{ default "latest" .Values.image.tag }}
         ports:
         - containerPort: 4000
         env:
