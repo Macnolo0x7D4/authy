@@ -2,7 +2,7 @@
 
 echo "Defining variables..."
 export RESOURCE_GROUP_NAME=authy
-export AKS_NAME=authy_aks
+export AKS_NAME=authyaks
 export ACR_NAME=authyregistry
 
 echo "Searching for resource group..."
