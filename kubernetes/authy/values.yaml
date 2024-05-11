@@ -113,3 +113,7 @@ image:
 
 dns:
   name: b08ea44f2846419fb5e5.eastus.aksapp.io
+
+authy:
+  postgres:
+    url: postgres://authy:authy@localhost:5432/authy

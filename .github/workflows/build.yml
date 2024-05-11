@@ -52,10 +52,10 @@ jobs:
             --create-namespace \
             --atomic \
             --wait \
-            --namespace staging \
+            --namespace authy \
             authy \
             ./kubernetes/authy \
             --set image.repository=${{ secrets.ACR_NAME }} \
             --set dns.name=${{ secrets.DNS_NAME }} \
-            --set authy.postgres.url=${{ secrets.POSTGRES_URL }}
+            --set authy.postgres.url=${{ secrets.DATABASE_URL }}
             
