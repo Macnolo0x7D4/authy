@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-    - host: {{ default "authy" .Release.Namespace }}.!DNS!
+    - host: {{ default "authy" .Release.Namespace }}.{{ .Values.dns.name }}
       http:
         paths:
           - backend:
