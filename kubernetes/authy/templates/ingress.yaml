@@ -2,12 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: authy-ingress
-  namespace: {{ default "staging" .Release.Namespace }}
+  namespace: {{ default "authy" .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-    - host: {{ default "staging" .Release.Namespace }}.!DNS!
+    - host: {{ default "authy" .Release.Namespace }}.!DNS!
       http:
         paths:
           - backend:
