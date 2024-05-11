@@ -6,8 +6,8 @@ metadata:
 spec:
   ports:
     - port: 4000
-      protocol: TCP
       targetPort: http
+      protocol: TCP
       name: http
   selector:
     app: authy
